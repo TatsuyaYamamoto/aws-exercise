@@ -1,4 +1,5 @@
 var config = require('../config');
+var objectAssign = require('object-assign');
 
 var imageObjects = [
     {
@@ -35,7 +36,7 @@ function images(req, res) {
     };
 
     imageObjects.forEach(function (object) {
-        var hand = Object.assign({}, responseTemplate.hand);
+        var hand = objectAssign({}, responseTemplate.hand);
         hand.name = object.name;
         hand.image_url = createObjectUrl(object.s3objectKey);
 
@@ -57,7 +58,7 @@ function random(req, res) {
     var randomHand = imageObjects[randomIndex];
 
     // レスポンスボディ作成
-    var response = Object.assign({}, responseTemplate.hand);
+    var response = objectAssign({}, responseTemplate.hand);
     response.name = randomHand.name;
     response.image_url = createObjectUrl(randomHand.s3objectKey);
 
