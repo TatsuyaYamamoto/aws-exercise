@@ -86,13 +86,13 @@ block scripts
 block content
     h1= title
     h2='あなた'
-    div#player
-        div#message
-        div#rock
+    div#message
+    div#player(style='display:table;')
+        div#rock(style='display:table-cell;')
             img(src='')
-        div#scissors
+        div#scissors(style='display:table-cell;')
             img(src='')
-        div#paper
+        div#paper(style='display:table-cell;')
             img(src='')
     h2='てき'
     div#enemy
