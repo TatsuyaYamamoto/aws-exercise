@@ -14,5 +14,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "object-assign": "^4.1.0"
+  },
+  "devDependencies": {
+    "initd-forever": "^0.1.8"
   }
 }
