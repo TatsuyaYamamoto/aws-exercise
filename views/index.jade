@@ -1,6 +1,99 @@
 extends layout
 
+block scripts
+    script(type='text/javascript').
+        $(function () {
+
+            $.ajax({
+                type: 'GET',
+                url:'/janken/hands',
+                cache: false,
+                success: function (response) {
+                    response.hands.forEach(function (hand) {
+                        if (hand.name == 'rock') {
+                            $('#rock').children('img').attr("src", hand.image_url);
+                            return;
+                        }
+                        if (hand.name == 'scissors') {
+                            $('#scissors').children('img').attr("src", hand.image_url);
+                            return;
+                        }
+                        if (hand.name == 'paper') {
+                            $('#paper').children('img').attr("src", hand.image_url);
+                            return;
+                        }
+                    });
+                }
+            });
+
+            $('#rock').click(function () {
+                getEnemyHand().done(function (response) {
+                    $('#enemy').children('img').attr("src", response.image_url);
+                    $('#message').html(jadge('rock', response.name));
+                });
+            });
+
+            $('#scissors').click(function () {
+                getEnemyHand().done(function (response) {
+                    $('#enemy').children('img').attr("src", response.image_url);
+                    $('#message').html(jadge('scissors', response.name));
+                });
+            });
+
+            $('#paper').click(function () {
+                getEnemyHand().done(function (response) {
+                    $('#enemy').children('img').attr("src", response.image_url);
+                    $('#message').html(jadge('paper', response.name));
+                });
+            });
+
+
+            function getEnemyHand(){
+                return $.ajax({
+                    type: 'GET',
+                    url: '/janken/hands/random',
+                    cache: false
+                });
+            }
+            function jadge(playerHand, enemyHand){
+                if(playerHand == enemyHand){
+                    return 'あいこ！、、、今日はこの辺で許してやる'
+                }
+                if(playerHand == 'rock'){
+                    if(enemyHand == 'scissors'){
+                        return 'ふひひ、かち！'
+                    }else{
+                        return 'ぐぬぬ、、、まけ、、、'
+                    }
+                }
+                if (playerHand == 'scissors') {
+                    if (enemyHand == 'paper') {
+                        return 'わーい！　かち！'
+                    } else {
+                        return 'おうふ、まけでござる'
+                    }
+
+                }
+                if (playerHand == 'paper') {
+                    if (enemyHand == 'rock') {
+                        return 'やったよーかったよー！'
+                    } else {
+                        return '目がぁ！！'
+                    }
+                }
+            }
+        });
 block content
-  h1= title
-  p
-    img(src='/image')
+    h1= title
+    h2='あなた'
+    div#player
+        div#message
+        div#rock
+            img(src='')
+        div#scissors
+            img(src='')
+        div#paper
+            img(src='')
+    h2='てき'
+    div#enemy
+         img(src='')
